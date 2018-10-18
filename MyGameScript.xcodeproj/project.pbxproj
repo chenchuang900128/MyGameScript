@@ -15,6 +15,10 @@
 		0427A1F32178C3AA00DAB134 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0427A1F22178C3AA00DAB134 /* main.m */; };
 		0427A1FD2178C3AA00DAB134 /* MyGameScriptTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0427A1FC2178C3AA00DAB134 /* MyGameScriptTests.m */; };
 		0427A2082178C3AA00DAB134 /* MyGameScriptUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0427A2072178C3AA00DAB134 /* MyGameScriptUITests.m */; };
+		0427A2162178C3B300DAB134 /* GameScript.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0427A2152178C3B300DAB134 /* GameScript.framework */; };
+		0427A2172178C54800DAB134 /* GameScript.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0427A2152178C3B300DAB134 /* GameScript.framework */; };
+		0427A2182178C54800DAB134 /* GameScript.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0427A2152178C3B300DAB134 /* GameScript.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0427A21B2178C5B300DAB134 /* GameScript.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0427A21A2178C5B300DAB134 /* GameScript.bundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +38,20 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		0427A2192178C54800DAB134 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				0427A2182178C54800DAB134 /* GameScript.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		0427A1E02178C3A900DAB134 /* MyGameScript.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyGameScript.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0427A1E32178C3A900DAB134 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -51,6 +69,8 @@
 		0427A2032178C3AA00DAB134 /* MyGameScriptUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyGameScriptUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0427A2072178C3AA00DAB134 /* MyGameScriptUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyGameScriptUITests.m; sourceTree = "<group>"; };
 		0427A2092178C3AA00DAB134 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0427A2152178C3B300DAB134 /* GameScript.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GameScript.framework; sourceTree = "<group>"; };
+		0427A21A2178C5B300DAB134 /* GameScript.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GameScript.bundle; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +78,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0427A2162178C3B300DAB134 /* GameScript.framework in Frameworks */,
+				0427A2172178C54800DAB134 /* GameScript.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,6 +103,8 @@
 		0427A1D72178C3A900DAB134 = {
 			isa = PBXGroup;
 			children = (
+				0427A21A2178C5B300DAB134 /* GameScript.bundle */,
+				0427A2152178C3B300DAB134 /* GameScript.framework */,
 				0427A1E22178C3A900DAB134 /* MyGameScript */,
 				0427A1FB2178C3AA00DAB134 /* MyGameScriptTests */,
 				0427A2062178C3AA00DAB134 /* MyGameScriptUITests */,
@@ -142,6 +166,7 @@
 				0427A1DC2178C3A900DAB134 /* Sources */,
 				0427A1DD2178C3A900DAB134 /* Frameworks */,
 				0427A1DE2178C3A900DAB134 /* Resources */,
+				0427A2192178C54800DAB134 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -235,6 +260,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0427A21B2178C5B300DAB134 /* GameScript.bundle in Resources */,
 				0427A1F02178C3AA00DAB134 /* LaunchScreen.storyboard in Resources */,
 				0427A1ED2178C3AA00DAB134 /* Assets.xcassets in Resources */,
 				0427A1EB2178C3AA00DAB134 /* Main.storyboard in Resources */,
@@ -435,10 +461,20 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = B94C4GLS2Q;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = MyGameScript/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+					"-licucore",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.gdnybankiphone.mbsiphone.MyGameScript;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -452,10 +488,20 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = B94C4GLS2Q;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = MyGameScript/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+					"-licucore",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.gdnybankiphone.mbsiphone.MyGameScript;
 				PRODUCT_NAME = "$(TARGET_NAME)";
