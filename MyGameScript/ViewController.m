@@ -9,14 +9,14 @@
 #import "ViewController.h"
 #import <GameScript/MBSLoginAlert.h>
 #import <GameScript/MBSSuspendControl.h>
+#import <GameScript/MBSPrefixDefine.h>
 
-#define kScreenWidth [[UIScreen mainScreen] bounds].size.width
-#define kScreenHeight [[UIScreen mainScreen] bounds].size.height
 
 @interface ViewController ()
 
 @property(nonatomic,strong)MBSLoginAlert *regAlert;
 @property(nonatomic,strong)MBSLoginAlert *logAlert;
+@property(nonatomic,strong)MBSSuspendControl *tmpControl;
 
 @end
 
@@ -27,7 +27,7 @@
     
     
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setFrame:CGRectMake(20, 200, kScreenWidth - 40, 40)];
+    [btn setFrame:CGRectMake(20, kScreenHeight - 80, kScreenWidth - 40, 40)];
     [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
     [btn setTitle:@"开始游戏" forState:UIControlStateNormal];
     btn.backgroundColor = [UIColor redColor];
@@ -38,7 +38,6 @@
 - (void)btnClick:(UIButton *)sender{
     
     
-    sender.hidden = YES;
 #if 1
     // 注册弹框
     self.regAlert = [[MBSLoginAlert alloc] initWithRegisterTitle:@"注册账号" loginBlock:^(id object) {
@@ -49,8 +48,68 @@
         self.logAlert = [[MBSLoginAlert alloc] initWithTitle:@"用户登录" loginBlock:^(id object) {
             
             [self.logAlert hide];
+            
+            if(!self.tmpControl){
+              
+                // 显示悬浮窗
+                self.tmpControl = [[MBSSuspendControl alloc] initWithClickBlock:^(NSUInteger index) {
+                    
+                    NSLog(@"点击第几个%lu",index);
+                    switch (index) {
+                        case 0:
+                        {
+                            
+                        }
+                            break;
+                        case 1:
+                        {
+                            
+                        }
+                            break;
+                        case 2:
+                        {
+                            
+                        }
+                            break;
+                        case 3:
+                        {
+                            
+                        }
+                            break;
+                        case 4:
+                        {
+                            
+                        }
+                            break;
+                            
+                        default:
+                            break;
+                    }
+                }];
+            }
+            [self.tmpControl show];
+            
+        } andRegisterBlock:^(id object) {
+            
+            [self.logAlert hide];
+            [self.regAlert show];
+        }];
+        [self.logAlert show];
+        
+        
+    } andRegisterBlock:^(id object) {
+        
+        /*
+         请求交易成功
+         */
+        
+        [self.regAlert hide];
+        
+        
+        if(!self.tmpControl){
+            
             // 显示悬浮窗
-            MBSSuspendControl *tmpControl = [[MBSSuspendControl alloc] initWithClickBlock:^(NSUInteger index) {
+            self.tmpControl = [[MBSSuspendControl alloc] initWithClickBlock:^(NSUInteger index) {
                 
                 NSLog(@"点击第几个%lu",index);
                 switch (index) {
@@ -84,62 +143,8 @@
                         break;
                 }
             }];
-            [tmpControl show];
-            
-        } andRegisterBlock:^(id object) {
-            
-            [self.logAlert hide];
-            [self.regAlert show];
-        }];
-        [self.logAlert show];
-        
-        
-    } andRegisterBlock:^(id object) {
-        
-        /*
-         请求交易成功
-         */
-        
-        [self.regAlert hide];
-        
-        
-        // 显示悬浮窗
-        MBSSuspendControl *tmpControl = [[MBSSuspendControl alloc] initWithClickBlock:^(NSUInteger index) {
-            
-            NSLog(@"点击第几个%lu",index);
-
-            switch (index) {
-                case 0:
-                    {
-                        
-                    }
-                    break;
-                case 1:
-                {
-                    
-                }
-                    break;
-                case 2:
-                {
-                    
-                }
-                    break;
-                case 3:
-                {
-                    
-                }
-                    break;
-                case 4:
-                {
-                    
-                }
-                    break;
-                    
-                default:
-                    break;
-            }
-        }];
-        [tmpControl show];
+        }
+        [self.tmpControl show];
         
     }];
     

@@ -7,9 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <GameScript/MBSLoginAlert.h>
-#import <GameScript/MBSSuspendControl.h>
-
 
 //! Project version number for GameScript.
 FOUNDATION_EXPORT double GameScriptVersionNumber;
