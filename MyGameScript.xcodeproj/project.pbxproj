@@ -19,6 +19,7 @@
 		0427A2172178C54800DAB134 /* GameScript.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0427A2152178C3B300DAB134 /* GameScript.framework */; };
 		0427A2182178C54800DAB134 /* GameScript.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0427A2152178C3B300DAB134 /* GameScript.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0427A21B2178C5B300DAB134 /* GameScript.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0427A21A2178C5B300DAB134 /* GameScript.bundle */; };
+		04E6754A217F3F0300C793A5 /* EXTScope.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E67548217F3F0300C793A5 /* EXTScope.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +72,9 @@
 		0427A2092178C3AA00DAB134 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0427A2152178C3B300DAB134 /* GameScript.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GameScript.framework; sourceTree = "<group>"; };
 		0427A21A2178C5B300DAB134 /* GameScript.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GameScript.bundle; sourceTree = "<group>"; };
+		04E67547217F3F0300C793A5 /* metamacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = metamacros.h; sourceTree = "<group>"; };
+		04E67548217F3F0300C793A5 /* EXTScope.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EXTScope.m; sourceTree = "<group>"; };
+		04E67549217F3F0300C793A5 /* EXTScope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EXTScope.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,6 +133,7 @@
 				0427A1E42178C3AA00DAB134 /* AppDelegate.m */,
 				0427A1E62178C3AA00DAB134 /* ViewController.h */,
 				0427A1E72178C3AA00DAB134 /* ViewController.m */,
+				04E67546217F3F0300C793A5 /* EXTScope */,
 				0427A1E92178C3AA00DAB134 /* Main.storyboard */,
 				0427A1EC2178C3AA00DAB134 /* Assets.xcassets */,
 				0427A1EE2178C3AA00DAB134 /* LaunchScreen.storyboard */,
@@ -154,6 +159,16 @@
 				0427A2092178C3AA00DAB134 /* Info.plist */,
 			);
 			path = MyGameScriptUITests;
+			sourceTree = "<group>";
+		};
+		04E67546217F3F0300C793A5 /* EXTScope */ = {
+			isa = PBXGroup;
+			children = (
+				04E67547217F3F0300C793A5 /* metamacros.h */,
+				04E67548217F3F0300C793A5 /* EXTScope.m */,
+				04E67549217F3F0300C793A5 /* EXTScope.h */,
+			);
+			path = EXTScope;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -288,6 +303,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04E6754A217F3F0300C793A5 /* EXTScope.m in Sources */,
 				0427A1E82178C3AA00DAB134 /* ViewController.m in Sources */,
 				0427A1F32178C3AA00DAB134 /* main.m in Sources */,
 				0427A1E52178C3AA00DAB134 /* AppDelegate.m in Sources */,

@@ -11,7 +11,7 @@
 #import <GameScript/MBSSuspendControl.h>
 #import <GameScript/MBSPrefixDefine.h>
 #import <GameScript/CustomProgress.h>
-
+#import "EXTScope.h"
 
 @interface ViewController ()
 
@@ -32,36 +32,38 @@
     [super viewDidLoad];
     
     progress = 0;
-
     
+    // 开始游戏按钮
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setFrame:CGRectMake(20, kScreenHeight - 130, kScreenWidth - 40, 40)];
     [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
     [btn setTitle:@"开始游戏" forState:UIControlStateNormal];
     btn.backgroundColor = [UIColor redColor];
     [self.view addSubview:btn];
+    
     // Do any additional setup after loading the view, typically from a nib.
 }
 
+#pragma mark 开始游戏按钮事件
 - (void)btnClick:(UIButton *)sender{
     
-    
-    
-#if 1
+    @weakify(self);
     // 注册弹框
     self.regAlert = [[MBSLoginAlert alloc] initWithRegisterTitle:@"注册账号" loginBlock:^(id object) {
-        
+        @strongify(self);
         // 跳老用户登录
         [self.regAlert hide];
         // 登录弹框
+        @weakify(self);
         self.logAlert = [[MBSLoginAlert alloc] initWithTitle:@"用户登录" loginBlock:^(id object) {
-            
+            @strongify(self);
             [self.logAlert hide];
             // 显示悬浮窗
             [self showSuspendControl];
             
         } andRegisterBlock:^(id object) {
             
+            @strongify(self);
             [self.logAlert hide];
             [self.regAlert show];
         }];
@@ -73,9 +75,11 @@
         /*
          请求交易成功
          */
+        @strongify(self);
         
         [self.regAlert hide];
         
+        // 显示悬浮窗
         [self showSuspendControl];
         
         
@@ -83,7 +87,6 @@
     
     [self.regAlert show];
     
-#endif
     
 }
 
@@ -93,8 +96,11 @@
     if (self.tmpControl) {
         [self.tmpControl removeFromSuperview];
     }
+    
+    @weakify(self);
     self.tmpControl = [[MBSSuspendControl alloc] initWithClickBlock:^(NSUInteger index) {
         
+        @strongify(self);
         if (index == 0) {
             
             // 刷新
@@ -107,8 +113,9 @@
                 
             }];
             [self.logAlert show];
-            NSLog(@"%@",self.logAlert);
             
+            
+            // 加载进度条
             self.loadProgress = [[CustomProgress alloc] initWithFrame:CGRectMake(40, kScreenHeight - 60, kScreenWidth - 80, 30)];
             //设置背景色
             self.loadProgress.bgimg.backgroundColor =[UIColor colorWithWhite:0.1 alpha:0.1];
@@ -132,25 +139,25 @@
             
             // 客服
             NSLog(@"客服");
-
+            
         }
         else if(index == 3){
             
             // 公告
             NSLog(@"公告");
-
+            
         }
         else if (index  == 4){
             
             // 礼包
             NSLog(@"礼包");
-
+            
         }
     }];
-    
     [self.tmpControl show];
 }
 
+#pragma mark 定时器事件
 -(void)timer
 {
     progress++;
@@ -169,6 +176,16 @@
     }
     
     
+}
+
+#pragma mark 重写dealloc方法
+-(void)dealloc{
+    
+    if ([self.tmpTimer isValid]) {
+        
+        [self.tmpTimer invalidate];
+        self.tmpTimer = nil;
+    }
 }
 
 - (void)didReceiveMemoryWarning {
