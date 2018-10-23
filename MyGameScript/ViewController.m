@@ -76,9 +76,7 @@
          请求交易成功
          */
         @strongify(self);
-        
         [self.regAlert hide];
-        
         // 显示悬浮窗
         [self showSuspendControl];
         
@@ -91,6 +89,7 @@
 }
 
 
+#pragma mark 显示悬浮窗事件
 - (void)showSuspendControl{
     
     if (self.tmpControl) {
@@ -105,7 +104,6 @@
             
             // 刷新
             self.logAlert = [[MBSLoginAlert alloc] initWithTitle:@"用户登录" loginBlock:^(id object) {
-                
                 
                 
             } andRegisterBlock:^(id object) {
@@ -187,6 +185,7 @@
         self.tmpTimer = nil;
     }
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
