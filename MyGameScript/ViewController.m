@@ -11,11 +11,12 @@
 #import <GameScript/MBSSuspendControl.h>
 #import <GameScript/MBSPrefixDefine.h>
 #import <GameScript/CustomProgress.h>
-#import "EXTScope.h"
-#import "FBKVOController.h"
+#import "FBKVOController/FBKVOController.h"
+#import "EXTScope/EXTScope.h"
+
 @import WebKit;
 
-@interface ViewController ()
+@interface ViewController ()<WKNavigationDelegate,WKUIDelegate>
 
 @property(nonatomic,strong)MBSLoginAlert *regAlert;
 @property(nonatomic,strong)MBSLoginAlert *logAlert;
@@ -43,6 +44,8 @@
     
     // WKWebView 创建
     self.currentWebView = [[WKWebView alloc] initWithFrame:CGRectMake(0, statusH, kScreenWidth, kScreenHeight - statusH - kIphoneXHomeHeight) configuration:[[WKWebViewConfiguration alloc] init]];
+    self.currentWebView.navigationDelegate = self;
+    self.currentWebView.UIDelegate = self;
     //打开左划回退功能
     [self.view addSubview:self.currentWebView];
     
@@ -201,9 +204,78 @@
 
 
 
-#pragma mark 重写dealloc方法
--(void)dealloc{
+
+#pragma mark WKWebViewDelegate
+
+- (void)webView:(WKWebView*)webView decidePolicyForNavigationAction:(WKNavigationAction*)navigationAction decisionHandler:(void(^)(WKNavigationActionPolicy))decisionHandler{
     
+    NSString *requestStr = [[[navigationAction.request URL] absoluteString] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    NSLog(@"自定义跳转链接：%@",requestStr);
+    
+    if ([requestStr hasPrefix:@"nymbsbank://"])
+    {
+        // 分割字符串 返回数组
+        NSArray *myArr = [requestStr componentsSeparatedByString:@"/"];
+        if ([myArr count]) {
+            // 获取后半段重要字符串
+            NSString *valueStr = [myArr lastObject];
+            // 分割字符串 返回数组
+            myArr = [valueStr componentsSeparatedByString:@"?"];
+            if ([myArr count]) {
+                // 获取跳转标志字符串
+                NSString *flagStr = (NSString *)[myArr firstObject];
+                // 获取参数
+                // NSString *paramStr = (NSString *)[myArr lastObject];
+                // 跳转到主页
+                if ([flagStr isEqualToString:@"back"]) {
+                    
+                }
+                else if ([flagStr isEqualToString:@"main"]) {
+                    
+                    
+                }
+                else if ([flagStr isEqualToString:@"login"]) {
+                    
+                    
+                    
+                }
+                
+                
+            }
+        }
+    }
+    decisionHandler(WKNavigationActionPolicyAllow);
+    
+}
+
+
+// 当开始发送请求时调用
+- (void)webView:(WKWebView*)webView didStartProvisionalNavigation:(null_unspecified WKNavigation *)navigation {
+    
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+}
+
+
+// 当请求过程中出现错误时调用
+- (void)webView:(WKWebView*)webView didFailNavigation:(WKNavigation*)navigation withError:(NSError *)error {
+    NSLog(@"%@= %s",error, __FUNCTION__);
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+}
+
+// 当开始发送请求时出错调用
+- (void)webView:(WKWebView*)webView didFailProvisionalNavigation:(WKNavigation*)navigation withError:(NSError *)error {
+    NSLog(@"%@= %s",error, __FUNCTION__);
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    
+}
+
+
+
+// 当网页加载完毕时调用：该方法使用最频繁
+- (void)webView:(WKWebView*)webView didFinishNavigation:(null_unspecified WKNavigation *)navigation {
+    // 将web视图置首
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     
 }
 
