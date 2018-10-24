@@ -12,6 +12,8 @@
 #import <GameScript/MBSPrefixDefine.h>
 #import <GameScript/CustomProgress.h>
 #import "EXTScope.h"
+#import "FBKVOController.h"
+@import WebKit;
 
 @interface ViewController ()
 
@@ -19,19 +21,58 @@
 @property(nonatomic,strong)MBSLoginAlert *logAlert;
 @property(nonatomic,strong)MBSSuspendControl *tmpControl;
 @property(nonatomic,strong)CustomProgress *loadProgress;
-@property(nonatomic,strong)NSTimer *tmpTimer;
+
+
+@property (nonatomic,strong)FBKVOController *KVOController;
+@property (nonatomic,strong)WKWebView *currentWebView;
 
 @end
 
 @implementation ViewController{
     
-    NSUInteger progress;
+    
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    progress = 0;
+    
+    
+    CGFloat statusH =  CGRectGetHeight([UIApplication sharedApplication].statusBarFrame);
+    
+    
+    // WKWebView 创建
+    self.currentWebView = [[WKWebView alloc] initWithFrame:CGRectMake(0, statusH, kScreenWidth, kScreenHeight - statusH - kIphoneXHomeHeight) configuration:[[WKWebViewConfiguration alloc] init]];
+    //打开左划回退功能
+    [self.view addSubview:self.currentWebView];
+    
+    
+    
+    
+    // FaceBook KVO框架
+    self.KVOController = [FBKVOController controllerWithObserver:self];
+    
+    // observe clock date property
+    @weakify(self);
+    [self.KVOController observe:self.currentWebView keyPath:@"estimatedProgress" options:NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew block:^(id  _Nullable observer, id  _Nonnull object, NSDictionary<NSKeyValueChangeKey,id> * _Nonnull change) {
+        
+        @strongify(self);
+        if (self.currentWebView.estimatedProgress > 0) {
+            
+            [self.loadProgress setProgress:self.currentWebView.estimatedProgress * 100];
+            
+        }
+        
+        if (self.currentWebView.estimatedProgress >= 1.0f) {
+            
+            // 隐藏登录弹框
+            [self.logAlert hide];
+            // 进度条隐藏
+            [self.loadProgress hide];
+        }
+    }];
+    
+    
     
     // 开始游戏按钮
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -40,6 +81,9 @@
     [btn setTitle:@"开始游戏" forState:UIControlStateNormal];
     btn.backgroundColor = [UIColor redColor];
     [self.view addSubview:btn];
+    
+    
+    [self.view bringSubviewToFront:btn];
     
     // Do any additional setup after loading the view, typically from a nib.
 }
@@ -112,7 +156,6 @@
             }];
             [self.logAlert show];
             
-            
             // 加载进度条
             self.loadProgress = [[CustomProgress alloc] initWithFrame:CGRectMake(40, kScreenHeight - 60, kScreenWidth - 80, 30)];
             //设置背景色
@@ -122,11 +165,12 @@
             self.loadProgress.presentlab.textColor = [UIColor grayColor];
             [self.loadProgress show];
             
-            self.tmpTimer =[NSTimer scheduledTimerWithTimeInterval:0.03
-                                                            target:self
-                                                          selector:@selector(timer)
-                                                          userInfo:nil
-                                                           repeats:YES];
+            //
+            NSURLRequest *request = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:@"https://www.jianshu.com/p/29e0d8ab91f1"]];
+            [self.currentWebView loadRequest:request];
+            
+            
+            
         }
         else if(index == 1){
             
@@ -155,35 +199,12 @@
     [self.tmpControl show];
 }
 
-#pragma mark 定时器事件
--(void)timer
-{
-    progress++;
-    if (progress <= self.loadProgress.maxValue) {
-        
-        [self.loadProgress setProgress:progress];
-        
-    }else
-    {
-        
-        [self.tmpTimer invalidate];
-        self.tmpTimer = nil;
-        progress = 0;
-        [self.loadProgress hide];
-        [self.logAlert hide];
-    }
-    
-    
-}
+
 
 #pragma mark 重写dealloc方法
 -(void)dealloc{
     
-    if ([self.tmpTimer isValid]) {
-        
-        [self.tmpTimer invalidate];
-        self.tmpTimer = nil;
-    }
+    
 }
 
 
