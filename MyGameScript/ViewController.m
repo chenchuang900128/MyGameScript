@@ -37,13 +37,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.view.backgroundColor = [UIColor whiteColor];
     
-    
-//    CGFloat statusH =  CGRectGetHeight([UIApplication sharedApplication].statusBarFrame);
+    CGFloat statusH =  CGRectGetHeight([UIApplication sharedApplication].statusBarFrame);
     
     
     // WKWebView 创建
-    self.currentWebView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight - kIphoneXHomeHeight) configuration:[[WKWebViewConfiguration alloc] init]];
+    self.currentWebView = [[WKWebView alloc] initWithFrame:CGRectMake(0, statusH, kScreenWidth, kScreenHeight - kIphoneXHomeHeight - statusH) configuration:[[WKWebViewConfiguration alloc] init]];
     self.currentWebView.navigationDelegate = self;
     self.currentWebView.UIDelegate = self;
     //打开左划回退功能
