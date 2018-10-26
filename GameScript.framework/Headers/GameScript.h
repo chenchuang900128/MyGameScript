@@ -12,7 +12,6 @@
 #import <GameScript/MBSPrefixDefine.h>
 #import <GameScript/CustomProgress.h>
 
-
 //! Project version number for GameScript.
 FOUNDATION_EXPORT double GameScriptVersionNumber;
 

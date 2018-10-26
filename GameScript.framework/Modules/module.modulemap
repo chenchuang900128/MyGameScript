@@ -1,6 +1,0 @@
-framework module GameScript {
-  umbrella header "GameScript.h"
-
-  export *
-  module * { export * }
-}
