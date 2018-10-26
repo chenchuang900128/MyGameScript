@@ -55,18 +55,26 @@
     // FaceBook KVO框架
     self.KVOController = [FBKVOController controllerWithObserver:self];
     
-    // observe clock date property
+    
     @weakify(self);
+    // 注册观察者
     [self.KVOController observe:self.currentWebView keyPath:@"estimatedProgress" options:NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew block:^(id  _Nullable observer, id  _Nonnull object, NSDictionary<NSKeyValueChangeKey,id> * _Nonnull change) {
         
         @strongify(self);
         if (self.currentWebView.estimatedProgress > 0) {
             
+            // 展示进度条值
             [self.loadProgress setProgress:self.currentWebView.estimatedProgress * 100];
             
         }
         
         if (self.currentWebView.estimatedProgress >= 1.0f) {
+            
+            /*
+               .........
+               网页加载完毕
+             
+             */
             
             // 隐藏登录弹框
             [self.logAlert hide];
@@ -100,17 +108,26 @@
         @strongify(self);
         // 跳老用户登录
         [self.regAlert hide];
+        
         // 登录弹框
         @weakify(self);
         self.logAlert = [[MBSLoginAlert alloc] initWithTitle:@"用户登录" loginBlock:^(id object) {
+            /*
+             .........
+             登录交易成功
+             
+             */
             @strongify(self);
+            // 登录弹框隐藏
             [self.logAlert hide];
             // 显示悬浮窗
             [self showSuspendControl];
             
         } andRegisterBlock:^(id object) {
             
+            // 点击注册按钮
             @strongify(self);
+             // 登录弹框隐藏 注册弹框显现
             [self.logAlert hide];
             [self.regAlert show];
         }];
@@ -120,16 +137,18 @@
     } andRegisterBlock:^(id object) {
         
         /*
-         请求交易成功
+         .........
+         注册交易成功
+         
          */
         @strongify(self);
+        // 注册弹框隐藏
         [self.regAlert hide];
         // 显示悬浮窗
         [self showSuspendControl];
         
         
     }];
-    
     [self.regAlert show];
     
     
@@ -149,7 +168,7 @@
         @strongify(self);
         if (index == 0) {
             
-            // 刷新
+            // 刷新按钮
             self.logAlert = [[MBSLoginAlert alloc] initWithTitle:@"用户登录" loginBlock:^(id object) {
                 
                 
@@ -163,9 +182,11 @@
             self.loadProgress = [[CustomProgress alloc] initWithFrame:CGRectMake(40, kScreenHeight - 60, kScreenWidth - 80, 30)];
             //设置背景色
             self.loadProgress.bgimg.backgroundColor =[UIColor colorWithWhite:0.1 alpha:0.1];
+            // 设置进度条颜色
             self.loadProgress.leftimg.backgroundColor =[UIColor yellowColor];
-            //可以更改lab字体颜色
+            //设置进度条lab字体颜色
             self.loadProgress.presentlab.textColor = [UIColor grayColor];
+            // 进度条显现
             [self.loadProgress show];
             
             //
@@ -227,16 +248,18 @@
                 NSString *flagStr = (NSString *)[myArr firstObject];
                 // 获取参数
                 // NSString *paramStr = (NSString *)[myArr lastObject];
-                // 跳转到主页
                 if ([flagStr isEqualToString:@"back"]) {
                     
+                    // 导航栏返回
                 }
                 else if ([flagStr isEqualToString:@"main"]) {
-                    
+                    // 跳转到主页
+
                     
                 }
                 else if ([flagStr isEqualToString:@"login"]) {
-                    
+                    // 跳转到登陆
+
                     
                     
                 }
