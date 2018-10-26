@@ -34,6 +34,17 @@
     
 }
 
+
+// 界面出现  刷新游戏
+-(void)viewDidAppear:(BOOL)animated{
+    // 进度条显现
+    [self.loadProgress show];
+    
+    // 加载游戏网页
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:@"https://www.jianshu.com/p/29e0d8ab91f1"]];
+    [self.currentWebView loadRequest:request];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -51,6 +62,8 @@
     
     
     
+   
+   
     
     // FaceBook KVO框架
     self.KVOController = [FBKVOController controllerWithObserver:self];
@@ -84,6 +97,18 @@
     }];
     
     
+    
+    // 加载进度条
+    self.loadProgress = [[CustomProgress alloc] initWithFrame:CGRectMake(40, kScreenHeight - 60, kScreenWidth - 80, 30)];
+    //设置背景色
+    self.loadProgress.bgimg.backgroundColor =[UIColor colorWithWhite:0.1 alpha:0.6];
+    // 设置进度条颜色
+    self.loadProgress.leftimg.backgroundColor =[UIColor yellowColor];
+    //设置进度条lab字体颜色
+    self.loadProgress.presentlab.textColor = [UIColor grayColor];
+    
+   
+   
     
     // 开始游戏按钮
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -178,14 +203,7 @@
             }];
             [self.logAlert show];
             
-            // 加载进度条
-            self.loadProgress = [[CustomProgress alloc] initWithFrame:CGRectMake(40, kScreenHeight - 60, kScreenWidth - 80, 30)];
-            //设置背景色
-            self.loadProgress.bgimg.backgroundColor =[UIColor colorWithWhite:0.1 alpha:0.1];
-            // 设置进度条颜色
-            self.loadProgress.leftimg.backgroundColor =[UIColor yellowColor];
-            //设置进度条lab字体颜色
-            self.loadProgress.presentlab.textColor = [UIColor grayColor];
+       
             // 进度条显现
             [self.loadProgress show];
             
